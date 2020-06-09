@@ -16,7 +16,7 @@ public class PatientRecord extends Application {
 
     @Override
     public void start(Stage arg0) {
-        new PatientRecordStage(600, 600, 0, 0);
+        new PatientRecordStage(600, 600);
     }
 
 
