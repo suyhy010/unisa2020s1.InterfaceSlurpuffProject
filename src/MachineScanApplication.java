@@ -156,13 +156,13 @@ public class MachineScanApplication extends Application {
         Rectangle colors = new Rectangle(w, h,
                 //Start X,Y, End X,Y, proportional to the shape, cycle(reflect, repeat, none), how to distribute color
                 new LinearGradient(0f, 1f, 1f, 0f, true, CycleMethod.NO_CYCLE, new Stop[]{
-                        new Stop(0, Color.web("#f8bd55")),
-                        new Stop(0.14, Color.web("#c0fe56")),
+                        new Stop(0, Color.web("#f8bdcc")),
+                        new Stop(0.14, Color.web("#ccff66")),
                         new Stop(0.28, Color.web("#5dfbc1")),
-                        new Stop(0.43, Color.web("#64c2f8")),
-                        new Stop(0.57, Color.web("#be4af7")),
+                        new Stop(0.43, Color.web("#ff66cc")),
+                        new Stop(0.57, Color.web("#ff9966")),
                         new Stop(0.71, Color.web("#ed5fc2")),
-                        new Stop(0.85, Color.web("#ef504c")),
+                        new Stop(0.85, Color.web("#66ccff")),
                         new Stop(1, Color.web("#f2660f")),}));
         colors.setWidth(w);
         colors.setHeight(h);
@@ -180,7 +180,7 @@ public class MachineScanApplication extends Application {
 
         root.setClip(new Rectangle(0,0,w,h));
 
-        //Animate for 40 seconds, move circle around randomly.
+        //Animate for 5 seconds, move circle around randomly.
         Timeline timeline = new Timeline();
         for (Node circle : circles.getChildren()) {
             timeline.getKeyFrames().addAll(
@@ -191,7 +191,7 @@ public class MachineScanApplication extends Application {
                             new KeyValue(circle.translateXProperty(), random() * w),
                             new KeyValue(circle.translateYProperty(), random() * h)));
         }
-        // play 40s of animation
+        // play 5s of animation
         timeline.play();
 
         timeline.setOnFinished(new EventHandler<ActionEvent>() {
