@@ -1,3 +1,5 @@
+package application.Controllers;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -11,7 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class SelectLanguageApplication extends Application {
+public class SelectLanguage extends Application {
 
 
     @Override

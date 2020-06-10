@@ -1,7 +1,10 @@
+package application.Controllers;
+
+import application.AppController;
+import application.Main;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -27,32 +30,31 @@ import javafx.util.Duration;
 
 import static java.lang.Math.random;
 
-public class MachineScanApplication extends Application {
+public class MachineScan extends AppController {
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        VBox root=new VBox();
+    protected Scene loadAction() {
+        VBox root = new VBox();
+        Scene scene = new Scene(root);
+
         root.setAlignment(Pos.CENTER);
         root.setSpacing(10);
         root.setPadding(new Insets(20));
 
         Button preButton=new Button("Prepare");
-        preButton.setOnAction(new EventHandler<ActionEvent>() {
+        preButton.setOnAction(new EventHandler<>() {
             @Override
             public void handle(ActionEvent event) {
-                preScan(primaryStage);
+                preScan();
             }
         });
-        root.getChildren().add(preButton);
 
-        Scene scene=new Scene(root);
-        primaryStage.setScene(scene);
-        primaryStage.setWidth(300);
-        primaryStage.setHeight(400);
-        primaryStage.setTitle("Machine Scan");
-        primaryStage.show();
+        root.getChildren().add(preButton);
+        Main.get_MainStage().setTitle("Machine Scan");
+
+        return scene;
     }
 
-    private void preScan(Stage owner){
+    private void preScan() {
         Stage preStage=new Stage();
         preStage.setTitle("Prepare Scan");
         preStage.initModality(Modality.WINDOW_MODAL);
@@ -62,7 +64,7 @@ public class MachineScanApplication extends Application {
         root.setSpacing(10);
         root.setPadding(new Insets(10));
 
-        ImageView imageView=new ImageView("scan_prepare.jpg");
+        ImageView imageView=new ImageView("resources/images/scan_prepare.jpg");
         imageView.setFitWidth(400);
         imageView.setFitHeight(300);
         root.getChildren().add(imageView);
@@ -71,14 +73,15 @@ public class MachineScanApplication extends Application {
         startButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
                 scan(preStage);
-
             }
         });
+
         root.getChildren().add(startButton);
 
         Scene scene=new Scene(root);
+        Stage owner = Main.get_MainStage();
+
         preStage.setX(owner.getX()+owner.getWidth()+10);
         preStage.setY(owner.getY());
         preStage.setScene(scene);
@@ -102,16 +105,14 @@ public class MachineScanApplication extends Application {
         sp.setBackground(new Background(new BackgroundFill(Color.GREEN,null,null)));
         root.getChildren().add(sp);
 
-        ImageView imageView=new ImageView("scan_start.jpg");
+        ImageView imageView=new ImageView("resources/images/scan_start.jpg");
         imageView.setFitWidth(200);
         imageView.setFitHeight(300);
         imageView.setVisible(false);
         sp.getChildren().add(imageView);
 
-        Pane colorBack=getColorfulCircls(200,300,imageView);
+        Pane colorBack= getColorfulCircles(200,300,imageView);
         sp.getChildren().add(colorBack);
-
-
 
         Button finishButton=new Button("Finish");
         finishButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -122,6 +123,7 @@ public class MachineScanApplication extends Application {
 
             }
         });
+
         root.getChildren().add(finishButton);
 
         Scene scene=new Scene(root);
@@ -132,7 +134,7 @@ public class MachineScanApplication extends Application {
         scanStage.show();
     }
 
-    private Pane getColorfulCircls(double w, double h, ImageView imageView){
+    private Pane getColorfulCircles(double w, double h, ImageView imageView){
         //Prepare scene
         Pane root = new Pane();
         root.setPrefWidth(w);
@@ -155,7 +157,7 @@ public class MachineScanApplication extends Application {
 
         Rectangle colors = new Rectangle(w, h,
                 //Start X,Y, End X,Y, proportional to the shape, cycle(reflect, repeat, none), how to distribute color
-                new LinearGradient(0f, 1f, 1f, 0f, true, CycleMethod.NO_CYCLE, new Stop[]{
+                new LinearGradient(0f, 1f, 1f, 0f, true, CycleMethod.NO_CYCLE, new Stop[] {
                         new Stop(0, Color.web("#f8bdcc")),
                         new Stop(0.14, Color.web("#ccff66")),
                         new Stop(0.28, Color.web("#5dfbc1")),
@@ -163,7 +165,8 @@ public class MachineScanApplication extends Application {
                         new Stop(0.57, Color.web("#ff9966")),
                         new Stop(0.71, Color.web("#ed5fc2")),
                         new Stop(0.85, Color.web("#66ccff")),
-                        new Stop(1, Color.web("#f2660f")),}));
+                        new Stop(1, Color.web("#f2660f"))
+                }));
         colors.setWidth(w);
         colors.setHeight(h);
 
@@ -204,9 +207,5 @@ public class MachineScanApplication extends Application {
 
 
         return root;
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

@@ -1,8 +1,9 @@
-package application.Security;
+package application.Controllers;
 import java.util.Arrays;
 import java.util.List;
 
 
+import application.AppController;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleStringProperty;
@@ -56,9 +57,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 
-public class Security {
+public class Security extends AppController {
 	
-	public Security(){
+	@Override
+	protected Scene loadAction() {
 		
 		//Set Layout
 		BorderPane root = new BorderPane();
@@ -244,10 +246,8 @@ public class Security {
         TreeTableView<Employee> treeTableView = new TreeTableView<>(employeesTree);
         treeTableView.getColumns().setAll(empColumn, emailColumn);
         announce.setCenter(treeTableView);
-		Stage stage = new Stage();
-		stage.setScene(scene);
-		stage.show();
 
+		return scene;
 	}
 	//Default staff information
 	public class Employee {

@@ -1,4 +1,5 @@
-package application.Report;
+package application.Controllers;
+import application.AppController;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,16 +34,16 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-public class Report{
+public class Report extends AppController {
 
     private final TableView<Person> table = new TableView<>();
     private final ObservableList<Person> data = FXCollections.observableArrayList(new Person("A", "B", "C", "D"));
     final HBox hb = new HBox();
 
-	public Report() {
-
+    @Override
+    protected Scene loadAction() {
         Scene scene = new Scene(new Group());
-        
+
         //Table Module
         //Show the detail data of patients
         //4 Columns for patients
@@ -139,10 +140,8 @@ public class Report{
         gridpane.setPadding(new Insets(5));
         gridpane.setHgap(10);
         gridpane.setVgap(10);
-        final ImageView imv = new ImageView();
-        final Image image2 = new Image(Report.class.getResourceAsStream("brain.jpg"));
+        final ImageView imv = new ImageView("resources/images/brain.jpg");
         imv.setFitHeight(200); imv.setFitWidth(200);
-        imv.setImage(image2);
         final HBox pictureRegion = new HBox();
         pictureRegion.getChildren().add(imv);
         gridpane.add(pictureRegion, 1, 1);  
@@ -161,6 +160,8 @@ public class Report{
 		//Main Window
 		//Set up tabs
 		TabPane tabPane = new TabPane();
+
+		tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 		
 		//Table Tab Pane
 		Tab tab1 = new Tab();
@@ -182,25 +183,26 @@ public class Report{
 		tabPane.getTabs().addAll(tab1,tab2,tab3);		 
 
 		//Set up scene and stage with the buttons and default size
-		Stage stage = new Stage();
 		((Group) scene.getRoot()).getChildren().addAll(tabPane);
-		stage.setScene(scene);
-		stage.show();
-		
+
+		return scene;
 	}
 	//No Database, default related PieChart
     private ObservableList<Data> getChartData() {
 	    ObservableList<Data> answer = FXCollections.observableArrayList();
-	    answer.addAll(new PieChart.Data("Iabetes", 17),
+
+	    answer.addAll(
+	            new PieChart.Data("Diabetes", 17),
 	            new PieChart.Data("Solid Tumor",31),
 	            new PieChart.Data("Genetic",10),
-	            new PieChart.Data("Ardiovascular",20),
+	            new PieChart.Data("Cardiovascular",20),
 	            new PieChart.Data("Other",21)
-	            );
+        );
+
 	    return answer;
 	}
-    
-    //No Database, Default persona database
+
+//No Database, Default persona database
     public static class Person {
     	 
         private final SimpleStringProperty Date;
